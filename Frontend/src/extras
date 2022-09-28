@@ -1,0 +1,63 @@
+import { useEffect } from "react";
+import useFetch from "./useFetch";
+const UpVote = ({ post_id }) => {
+  //   const post_data = [];
+  console.log(`id: ${post_id}`);
+
+  const endpointUrl = "https://oauth.reddit.com/api/vote";
+
+  const headerParameters = {
+    UserAgent: "testscript by u/Puzzled_AD307",
+    authorization: `Bearer 2236673209865-Ia5glN3pd7Qn9J48PSfZ70RUNDh10A`,
+    "Content-Type": "application/json",
+  };
+  const bodyParameters = JSON.stringify({
+    dir: 1,
+    id: `t3_${post_id}`,
+  });
+
+  const options = {
+    method: "POST",
+    headers: headerParameters,
+    body: bodyParameters,
+  };
+
+  const optionsStr = JSON.stringify(options);
+  const { data: voteData, responseStatus: voteStatus } = useFetch(
+    endpointUrl,
+    optionsStr
+  );
+  // console.log(voteData);
+  useEffect(() => {
+    console.log("here");
+    console.log(voteData);
+  }, [voteData]);
+  function onclick() {
+    console.log("i");
+  }
+
+  return (
+    <button type="button" className="btn btn-light" onClick={onclick()}>
+      Upvote
+    </button>
+  );
+  //   if(data === null){
+  //     return(
+  //     <div class="alert alert-light" role="alert">
+  //             <span class="visually-hidden">Loading...</span>
+  //         </div>
+  //     );
+  //   }
+  // else {
+  //     console.log(responseStatus)
+  // if(responseStatus === null){
+  //   return(
+  //     <div class="alert alert-light" role="alert">
+  //     Vote Conducted Successfully
+  //     </div>
+  // );
+  // }
+  //  }
+};
+
+export default UpVote;
